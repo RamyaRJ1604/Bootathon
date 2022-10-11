@@ -1,5 +1,7 @@
-package bootathon;
 import javax.swing.*;
+import java.util.regex.*;
+import java.awt.event.*;
+import java.sql.*;
 public class login
 {
 	public static void main(String args[])  
@@ -21,7 +23,7 @@ public class login
 	    heading.setBounds(200,50,100,30);
 	    username=new JLabel("Username");  
 	    username.setBounds(100,100, 100,30);
-	    t1=new JTextField(" Enter Username ");  
+	    t1=new JTextField();  
 	    t1.setBounds(175,100, 200,30); 
 	    password=new JLabel("Password");  
 	    password.setBounds(100,150, 100,30);
@@ -34,6 +36,26 @@ public class login
 	    rb=new ButtonGroup();    
 	    b=new JButton("LOGIN");
 	    b.setBounds(190,250,100,30);
+	    b.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				if(!Pattern.matches("^[a-zA-Z_]{8,20}$", t1.getText())) {
+					JOptionPane.showMessageDialog(f, "Invalid Username!");
+					username.setText("");
+					username.requestFocus();
+				}
+				else if(!Pattern.matches("^(?=.*[0-9])"+ "(?=.*[a-z])(?=.*[A-Z])"+ "(?=.*[@#$%^&+=])"+ "(?=\\S+$).{8,20}$", String.valueOf(pass.getPassword()))) {
+					JOptionPane.showMessageDialog(f, "Invalid Password!");
+					pass.setText("");
+					pass.requestFocus();
+				}
+				else if(r1.isSelected()==false && r2.isSelected()==false) {
+					JOptionPane.showMessageDialog(f, "Select an option!");
+				}
+				else {
+					JOptionPane.showMessageDialog(f, "Login Successful!");
+				}
+			}
+		}); 
 	    
 	    f.add(heading);
 	    f.add(username);

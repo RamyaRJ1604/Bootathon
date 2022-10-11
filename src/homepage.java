@@ -1,4 +1,3 @@
-package bootathon;
 import javax.swing.*;
 import java.awt.*; 
 
