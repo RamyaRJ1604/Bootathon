@@ -2,7 +2,6 @@ import java.awt.*;
 import java.sql.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 
 public class AddFoodInMenu extends JFrame{

@@ -6,39 +6,39 @@ public class homepage
 {	
 	public static void main(String args[])  
 	    {  
-		    JFrame f;
+		    JFrame frame;
 		    JLabel app_name;
-		    JButton b1;
-		    JButton b2;
+		    JButton register;
+		    JButton login;
 		      
-		    f=new JFrame("HOME PAGE");
+		    frame=new JFrame("HOME PAGE");
 		    app_name=new JLabel("MEGA BITE");
 		    app_name.setFont(new Font("Verdana", Font.PLAIN, 18));
 		    app_name.setBounds(180,50,150,100); 
 		    
-		    b1=new JButton("REGISTER");
-		    b1.setBounds(120,150,100,40);
-		    b1.addActionListener(new ActionListener() {
+		    register=new JButton("REGISTER");
+		    register.setBounds(120,150,100,40);
+		    register.addActionListener(new ActionListener() {
 		    	public void actionPerformed(ActionEvent e) {
 		    		new Cust_Frame();
-		    		f.dispose();
+		    		frame.dispose();
 		    	}
 		    });
 		    
-		    b2=new JButton("LOGIN");
-		    b2.setBounds(250,150,100,40);
-		    b2.addActionListener(new ActionListener() {
+		    login=new JButton("LOGIN");
+		    login.setBounds(250,150,100,40);
+		    login.addActionListener(new ActionListener() {
 		    	public void actionPerformed(ActionEvent e) {
 		    		new login();
-		    		f.dispose();
+		    		frame.dispose();
 		    	}
 		    });
 		    	
-		    f.add(app_name);
-		    f.add(b1);
-		    f.add(b2);
-		    f.setSize(500,400);  
-		    f.setLayout(null);  
-		    f.setVisible(true);  
+		    frame.add(app_name);
+		    frame.add(register);
+		    frame.add(login);
+		    frame.setSize(500,400);  
+		    frame.setLayout(null);  
+		    frame.setVisible(true);  
 	    }  
 }
