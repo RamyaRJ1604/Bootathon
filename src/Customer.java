@@ -1,13 +1,10 @@
-import javax.swing.JFrame;
-import javax.swing.JTextField;
-
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.*;
 public class Customer {
-
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("Customer class");
@@ -100,6 +97,12 @@ class Cust_Frame extends JFrame{
 		password.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 		//adding the components to the frame
 		
+//		JRadioButton r1 = new JRadioButton("Customer"); 
+//	    r1.setBounds(420,350,100,50);    
+//	    JRadioButton r2 = new JRadioButton("Restaurant Staff"); 	
+//	    r2.setBounds(420,550,100,50); 
+//	    ButtonGroup rb = new ButtonGroup();    
+		
 		add(title);
 		add(namet);
 		add(emailt);
@@ -112,6 +115,10 @@ class Cust_Frame extends JFrame{
 		add(password);
 		add(passwordt);
 		add(register);
+//		rb.add(r1);
+//	    rb.add(r2);
+//	    add(r1);
+//	    add(r2);
 		setLayout(null);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

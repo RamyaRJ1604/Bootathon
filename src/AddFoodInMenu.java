@@ -3,8 +3,8 @@ import java.awt.Font;
 
 import javax.swing.*;
 
-public class Menu extends JFrame{
-	Menu(){
+public class AddFoodInMenu extends JFrame{
+	AddFoodInMenu(){
 		
 		Font  f1  = new Font(Font.DIALOG,  Font.BOLD, 16);
 		
@@ -49,7 +49,7 @@ public class Menu extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	public static void main(String[] args) {
-		new Menu();
+		new AddFoodInMenu();
 	}
 
 }
