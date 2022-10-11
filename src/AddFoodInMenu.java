@@ -2,7 +2,6 @@ import java.awt.*;
 import java.sql.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 
 public class AddFoodInMenu extends JFrame{
@@ -48,7 +47,7 @@ public class AddFoodInMenu extends JFrame{
 			public void actionPerformed(ActionEvent evt) {
 				try {
 					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/STUDENT","ramya","ramya123");
+					Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/temp","ramya","ramya123");
 					Statement statement = connection.createStatement();
 					String insertquery = "insert into menu values (?,?)";
 					PreparedStatement insertvalue = connection.prepareStatement(insertquery); 

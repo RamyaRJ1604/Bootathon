@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.*;
+import java.util.regex.Pattern;
 
 import javax.swing.*;
 public class Customer {
@@ -115,6 +117,41 @@ class Cust_Frame extends JFrame{
 		add(password);
 		add(passwordt);
 		add(register);
+		
+		//validation
+		register.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				if(!Pattern.matches("^[a-zA-Z_]{8,20}$", name.getText())) {
+					JOptionPane.showMessageDialog(new Cust_Frame() , "Invalid Username!", "Alert", JOptionPane.WARNING_MESSAGE);
+					name.setText("");
+					name.requestFocus();
+				}
+				else if(!Pattern.matches("[a-zA-Z\\.0-9]{3,}[@][a-z]{3,}[\\.][a-z]{2,3}", String.valueOf(email.getText()))) {
+					JOptionPane.showMessageDialog(null, "Invalid E-Mail ID!", "Alert", JOptionPane.WARNING_MESSAGE);
+					email.setText("");
+					email.requestFocus();
+				}
+				else if(address.getText()==null) {
+					JOptionPane.showMessageDialog(null, "Please enter valid address.", "Alert", JOptionPane.WARNING_MESSAGE);
+					address.setText("");
+					address.requestFocus();
+				}
+				else if(!Pattern.matches("^[1-9][0-9]{9}$", String.valueOf(mobile.getText()))) {
+					JOptionPane.showMessageDialog(null, "Invalid Mobile Number!", "Alert", JOptionPane.WARNING_MESSAGE);
+					mobile.setText("");
+					mobile.requestFocus();
+				}
+				else if(!Pattern.matches("^(?=.*[0-9])"+ "(?=.*[a-z])(?=.*[A-Z])"+ "(?=.*[@#$%^&+=])"+ "(?=\\S+$).{8,20}$", String.valueOf(password.getPassword()))) {
+					JOptionPane.showMessageDialog(null, "Invalid Password!", "Alert", JOptionPane.WARNING_MESSAGE);
+					password.setText("");
+					password.requestFocus();
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Login Successful!");
+				}
+			}
+		});
+		
 //		rb.add(r1);
 //	    rb.add(r2);
 //	    add(r1);
