@@ -2,12 +2,9 @@ import javax.swing.*;
 import java.util.regex.*;
 import java.awt.event.*;
 import java.sql.*;
-public class login
-{
-	public static void main(String args[])  
-    {  
-		
-	    JFrame f;
+public class login{
+	login(){
+		JFrame f;
 	    JLabel heading;
 	    JLabel username;
 	    JTextField t1;
@@ -69,7 +66,8 @@ public class login
 	    f.add(b);
 	    f.setSize(500,500);  
 	    f.setLayout(null);  
-	    f.setVisible(true);  
-    }  
+	    f.setVisible(true);  	
+	}
+	public static void main(String args[]){}  
 }
   
