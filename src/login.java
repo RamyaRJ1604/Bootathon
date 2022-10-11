@@ -2,72 +2,100 @@ import javax.swing.*;
 import java.util.regex.*;
 import java.awt.event.*;
 import java.sql.*;
+
 public class login{
 	login(){
-		JFrame f;
+		JFrame frame;
 	    JLabel heading;
 	    JLabel username;
-	    JTextField t1;
+	    JTextField usernameInput;
 	    JLabel password; 
-	    JPasswordField pass;
-	    JRadioButton r1;
-	    JRadioButton r2;   
-	    ButtonGroup rb;
-	    JButton b;
+	    JPasswordField passwordInput;
+	    JRadioButton customerRadio;
+	    JRadioButton staffRadio;   
+	    ButtonGroup buttonGroup;
+	    JButton login;
 	      
-	    f=new JFrame("LOGIN PAGE");
+	    frame=new JFrame("LOGIN PAGE");
 	    heading=new JLabel("LOGIN PAGE");
 	    heading.setBounds(200,50,100,30);
 	    username=new JLabel("Username");  
 	    username.setBounds(100,100, 100,30);
-	    t1=new JTextField();  
-	    t1.setBounds(175,100, 200,30); 
+	    usernameInput=new JTextField();  
+	    usernameInput.setBounds(175,100, 200,30); 
 	    password=new JLabel("Password");  
 	    password.setBounds(100,150, 100,30);
-	    pass=new JPasswordField();  
-	    pass.setBounds(175,150, 200,30);
-	    r1=new JRadioButton("Customer"); 
-	    r1.setBounds(120,200,100,30);    
-	    r2=new JRadioButton("Restaurant Staff"); 	
-	    r2.setBounds(230,200,200,30); 
-	    rb=new ButtonGroup();    
-	    b=new JButton("LOGIN");
-	    b.setBounds(190,250,100,30);
-	    b.addActionListener(new ActionListener() {
+	    passwordInput=new JPasswordField();  
+	    passwordInput.setBounds(175,150, 200,30);
+	    customerRadio=new JRadioButton("Customer"); 
+	    customerRadio.setBounds(120,200,100,30);    
+	    staffRadio=new JRadioButton("Restaurant Staff"); 	
+	    staffRadio.setBounds(230,200,200,30); 
+	    buttonGroup=new ButtonGroup();    
+	    login=new JButton("LOGIN");
+	    login.setBounds(190,250,100,30);
+	    login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				if(!Pattern.matches("^[a-zA-Z_]{8,20}$", t1.getText())) {
-					JOptionPane.showMessageDialog(f, "Invalid Username!");
+				if(!Pattern.matches("[a-zA-Z_]{8,20}", usernameInput.getText())) {
+					JOptionPane.showMessageDialog(frame, "Invalid Username!", "Alert", JOptionPane.WARNING_MESSAGE);
 					username.setText("");
 					username.requestFocus();
 				}
-				else if(!Pattern.matches("^(?=.*[0-9])"+ "(?=.*[a-z])(?=.*[A-Z])"+ "(?=.*[@#$%^&+=])"+ "(?=\\S+$).{8,20}$", String.valueOf(pass.getPassword()))) {
-					JOptionPane.showMessageDialog(f, "Invalid Password!");
-					pass.setText("");
-					pass.requestFocus();
+				else if(!Pattern.matches("^(?=.*[0-9])"+ "(?=.*[a-z])(?=.*[A-Z])"+ "(?=.*[@#$%^&+=])"+ "(?=\\S+$).{8,20}$", String.valueOf(passwordInput.getPassword()))) {
+					JOptionPane.showMessageDialog(frame, "Invalid Password!", "Alert", JOptionPane.WARNING_MESSAGE);
+					passwordInput.setText("");
+					passwordInput.requestFocus();
 				}
-				else if(r1.isSelected()==false && r2.isSelected()==false) {
-					JOptionPane.showMessageDialog(f, "Select an option!");
+				else if(customerRadio.isSelected()==false && staffRadio.isSelected()==false) {
+					JOptionPane.showMessageDialog(frame, "Select an option!", "Alert", JOptionPane.WARNING_MESSAGE);
 				}
 				else {
-					JOptionPane.showMessageDialog(f, "Login Successful!");
+					String name = usernameInput.getText(), pwd = new String(passwordInput.getPassword());
+					if(customerRadio.isSelected() && authorizeUser("customer", name, pwd)) {
+						new CustomerPage();
+						frame.dispose();
+					} 
+					else if(staffRadio.isSelected() && authorizeUser("staff", name, pwd)) {
+						new StaffPage();
+						frame.dispose();
+					} else {
+						JOptionPane.showMessageDialog(frame, "User is not registered!");
+					}
 				}
 			}
 		}); 
 	    
-	    f.add(heading);
-	    f.add(username);
-	    f.add(t1);   
-	    f.add(password); 
-	    f.add(pass);
-	    f.add(r1);
-	    f.add(r2);
-	    rb.add(r1);
-	    rb.add(r2);
-	    f.add(b);
-	    f.setSize(500,500);  
-	    f.setLayout(null);  
-	    f.setVisible(true);  	
+	    frame.add(heading);
+	    frame.add(username);
+	    frame.add(usernameInput);   
+	    frame.add(password); 
+	    frame.add(passwordInput);
+	    frame.add(customerRadio);
+	    frame.add(staffRadio);
+	    buttonGroup.add(customerRadio);
+	    buttonGroup.add(staffRadio);
+	    frame.add(login);
+	    frame.setSize(500,500);  
+	    frame.setLayout(null);  
+	    frame.setVisible(true);  	
 	}
-	public static void main(String args[]){}  
+	public static boolean authorizeUser(String table, String name, String password) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		    Connection conn = DriverManager.getConnection(
+		        "jdbc:mysql://localhost:3306/Restaurant_Management","root", "passwood");
+		    Statement statement = conn.createStatement();
+		    ResultSet rs = statement.executeQuery("select count(*) from "+table+" where username = "+name+" & password = "+password);
+		    rs.next();
+		    if(rs.getInt(1) == 1) return true;
+		    return false;
+		} catch(Exception e) {
+			return false;
+		}
+	}
+	public static void main(String args[]){
+		new login();
+	}
+	
 }
   
