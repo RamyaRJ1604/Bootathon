@@ -14,6 +14,7 @@ public class AddFoodInMenu extends JFrame{
 		title.setFont(f1);
 		add(title);
 		
+		// Color class for Purple
 		Color purp = new Color(122,136,222);
 		this.getContentPane().setBackground(purp);
 		
