@@ -3,8 +3,8 @@ import java.util.regex.*;
 import java.awt.event.*;
 import java.sql.*;
 
-public class login{
-	login(){
+public class Login{
+	Login(){
 		JFrame frame;
 	    JLabel heading;
 	    JLabel username;
@@ -80,21 +80,28 @@ public class login{
 	    frame.setVisible(true);  	
 	}
 	public static boolean authorizeUser(String table, String name, String password) {
+		PreparedStatement statement = null;
+		Connection conn = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-		    Connection conn = DriverManager.getConnection(
-		        "jdbc:mysql://localhost:3306/Restaurant_Management","root", "passwood");
-		    Statement statement = conn.createStatement();
-		    ResultSet rs = statement.executeQuery("select count(*) from "+table+" where username = "+name+" & password = "+password);
+		    conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant_management","root", "magesh123");
+		    statement = conn.prepareStatement("select count(*) from "+table+" where customer_name = ? && password = ?");
+			statement.setString(1, name);
+			statement.setString(2, password);
+		    ResultSet rs = statement.executeQuery();
 		    rs.next();
-		    if(rs.getInt(1) == 1) return true;
+		    if(rs.getInt(1) >= 1) return true;
 		    return false;
 		} catch(Exception e) {
+			e.printStackTrace();
 			return false;
+		} finally {
+			try { statement.close(); } catch (Exception e) { }
+			try { conn.close(); } catch (Exception e) { }
 		}
 	}
 	public static void main(String args[]){
-		new login();
+		new Login();
 	}
 	
 }
