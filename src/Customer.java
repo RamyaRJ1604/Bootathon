@@ -13,7 +13,6 @@ public class Customer {
 		Cust_Frame customer = new Cust_Frame();
 	}
 	
-
 }
 class Cust_Frame extends JFrame{
 	JLabel title;

@@ -7,6 +7,10 @@ import javax.swing.*;
 public class AddFoodInMenu extends JFrame{
 	AddFoodInMenu(){
 		
+		
+		
+		// jdbc
+		
 		Font  f1  = new Font(Font.DIALOG,  Font.BOLD, 16);
 		
 		JLabel title = new JLabel("Menu");
@@ -46,13 +50,23 @@ public class AddFoodInMenu extends JFrame{
 		addFood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				try {
+					System.out.print("Dfd");
+					int min = 10000;
+					int max = 99999;
+//					int randid = (int)Math.round(Math.random() * (max - min + 1) + min);
+					String rowCount = "select count(*) from Menu";
 					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/temp","ramya","ramya123");
+					Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant_management","root","pranav@05");
 					Statement statement = connection.createStatement();
-					String insertquery = "insert into menu values (?,?)";
+					String insertquery = "insert into Menu values (?,?,?)";
+					
 					PreparedStatement insertvalue = connection.prepareStatement(insertquery); 
-					insertvalue.setString(1, nameInput.getText());
-					insertvalue.setInt(2, Integer.parseInt(priceInput.getText()));
+					ResultSet totalcount = statement.executeQuery(rowCount);
+					totalcount.next();
+					int count = totalcount.getInt(1);
+					insertvalue.setInt(1, count);
+					insertvalue.setString(2, nameInput.getText());
+					insertvalue.setInt(3, Integer.parseInt(priceInput.getText()));
 					insertvalue.executeUpdate();
 					connection.close();
 				}
@@ -66,6 +80,8 @@ public class AddFoodInMenu extends JFrame{
 		setVisible(true);
 		setSize(400, 300);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		
 	}
 	public static void main(String[] args) {
 		new AddFoodInMenu();
