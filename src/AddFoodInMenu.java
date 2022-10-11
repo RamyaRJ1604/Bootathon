@@ -1,5 +1,7 @@
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -42,7 +44,24 @@ public class AddFoodInMenu extends JFrame{
 		addFood.setBounds(180, 190, 100, 40);
 		addFood.setBackground(Color.yellow);
 		add(addFood);
-		
+		addFood.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/STUDENT","ramya","ramya123");
+					Statement statement = connection.createStatement();
+					String insertquery = "insert into menu values (?,?)";
+					PreparedStatement insertvalue = connection.prepareStatement(insertquery); 
+					insertvalue.setString(1, nameInput.getText());
+					insertvalue.setInt(2, Integer.parseInt(priceInput.getText()));
+					insertvalue.executeUpdate();
+					connection.close();
+				}
+				catch(Exception e){
+					System.out.println(e);
+				}
+			}
+		}); 
 		
 		setLayout(null);
 		setVisible(true);

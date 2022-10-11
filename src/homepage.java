@@ -31,15 +31,6 @@ public class homepage
 		    	public void actionPerformed(ActionEvent e) {
 		    		new login();
 		    		f.dispose();
-		    		
-		    		
-		    		/*
-		    		 * conn
-		    		 * stmt
-		    		 * executequeue(insert into address values(rand, input data...));
-		    		 * executequeue(insert into customer values(name, mail, rand, password))
-		    		 * 
-		    		 * */
 		    	}
 		    });
 		    	
