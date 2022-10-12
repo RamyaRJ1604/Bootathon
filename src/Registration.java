@@ -230,12 +230,12 @@ public class Registration extends JFrame{
 			return false;
 		} 
 		finally {
-			try { statement.close(); } catch (Exception e) { }
-			try { statement1.close(); } catch (Exception e) { }
-			try { conn.close(); } catch (Exception e) { }
-    		try { userRegister.close(); } catch (Exception e) { }
-    		try { setAddress.close(); } catch (Exception e) { }
-    		try { checkAddress.close(); } catch (Exception e) { }
+			try {statement.close();} catch (Exception e) { }
+			try {statement1.close();} catch (Exception e) { }
+			try {conn.close();} catch (Exception e) { }
+    		try {userRegister.close();} catch (Exception e) { }
+    		try {setAddress.close();} catch (Exception e) { }
+    		try {checkAddress.close();} catch (Exception e) { }
 		
 		}
 		return true;

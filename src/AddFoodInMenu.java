@@ -44,25 +44,48 @@ public class AddFoodInMenu extends JFrame{
 		add(addFood);
 		addFood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
+				Connection conn = null;
+				Statement statement = null;
+				PreparedStatement insertValue = null;
+				PreparedStatement checkValue = null;
 				try {
-					String rowCount = "select count(*) from Menu";
 					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant_management","root","magesh123");
-					Statement statement = connection.createStatement();
-					String insertquery = "insert into Menu values (?,?,?)";
+					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant_management","root","magesh123");
 					
-					PreparedStatement insertvalue = connection.prepareStatement(insertquery); 
-					ResultSet totalcount = statement.executeQuery(rowCount);
-					totalcount.next();
-					int count = totalcount.getInt(1);
-					insertvalue.setInt(1, count);
-					insertvalue.setString(2, nameInput.getText());
-					insertvalue.setInt(3, Integer.parseInt(priceInput.getText()));
-					insertvalue.executeUpdate();
-					connection.close();
+					String checkQuery = "select count(*) from menu where food_name = ?";
+					checkValue = conn.prepareStatement(checkQuery); 
+					checkValue.setString(1, nameInput.getText());
+					ResultSet ifPresent = checkValue.executeQuery();
+					ifPresent.next();
+					if(ifPresent.getInt(1)==0){
+						statement = conn.createStatement();
+						String rowCount = "select count(*) from Menu";
+						ResultSet totalcount = statement.executeQuery(rowCount);
+						totalcount.next();
+						int count = totalcount.getInt(1);
+
+						String insertquery = "insert into Menu values (?,?,?)";
+						insertValue = conn.prepareStatement(insertquery); 
+						insertValue.setInt(1, count);
+						insertValue.setString(2, nameInput.getText());
+						insertValue.setInt(3, Integer.parseInt(priceInput.getText()));
+						insertValue.executeUpdate();
+						JOptionPane.showMessageDialog(null, "Added Successfully!");
+					} else {
+						String insertquery = "update menu set price = ? where food_name = ?";
+						insertValue = conn.prepareStatement(insertquery); 
+						insertValue.setInt(1, Integer.parseInt(priceInput.getText()));
+						insertValue.setString(2, nameInput.getText());
+						insertValue.executeUpdate();
+						JOptionPane.showMessageDialog(null, "Food Already Present in Menu, Updated Price Successfully");
+					}
 				}
 				catch(Exception e){
 					System.out.println(e);
+				} finally {
+					try {statement.close();} catch (Exception e) { }
+					try {insertValue.close();} catch (Exception e) { }
+					try {conn.close();} catch (Exception e) { }
 				}
 			}
 		}); 
