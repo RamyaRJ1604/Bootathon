@@ -2,10 +2,10 @@ import java.awt.*;
 import javax.swing.*;
 
 public class CustomerPage extends JFrame{
-	CustomerPage(){
+	CustomerPage(User currentUser){
 		Font  f1  = new Font(Font.DIALOG,  Font.BOLD, 16);
 		
-		JLabel title = new JLabel("Welcome Customer");
+		JLabel title = new JLabel("Welcome " + currentUser.name);
 		title.setBounds(110, 40, 180, 20);
 		title.setForeground(Color.yellow);
 		title.setFont(f1);
@@ -35,7 +35,7 @@ public class CustomerPage extends JFrame{
 		setSize(400, 300);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-	public static void main(String[] args) {
-		new CustomerPage();
-	}
+	// public static void main(String[] args) {
+	// 	new CustomerPage();
+	// }
 }

@@ -49,13 +49,15 @@ class OrderFrame extends JFrame{
 //			int randid = (int)Math.round(Math.random() * (max - min + 1) + min);
 			
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant_management","root","pranav@05");
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant_management","root","magesh123");
 			Statement statement = connection.createStatement();
-			String query = "select * from Menu";
+			String query = "select * from menu";
 			ResultSet rs = statement.executeQuery(query);
 			int starty = 150;
-			
+//			JCheckBox cb;
+//			temp = new JCheckBox("This is ");
 			while(rs.next()) {
+				
 				int foodid = rs.getInt(1);
 				String foodname = rs.getString(2);
 				int foodprice = rs.getInt(3);
@@ -74,6 +76,7 @@ class OrderFrame extends JFrame{
 				empty.setForeground(Color.cyan);
 				price.setForeground(Color.yellow);
 				name.setForeground(Color.yellow);
+				cb.setBackground(purp);
 				add(cb);
 				add(name);
 				add(price);
@@ -93,9 +96,9 @@ class OrderFrame extends JFrame{
 				add(title);
 				add(image);
 				setLayout(null);
-				setVisible(true);
 				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				setSize(800,800);
+				setVisible(true);
 		
 	}
 }

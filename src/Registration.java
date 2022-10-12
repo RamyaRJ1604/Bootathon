@@ -160,7 +160,7 @@ public class Registration extends JFrame{
 						receivedAddress,
 						receivedUserType
 					);
-					if(createUser(newUser))
+					if(regiserUser(newUser))
 						JOptionPane.showMessageDialog(null, "Registration Successful!");
 					else
 						JOptionPane.showMessageDialog(null, "Registration Failed!");
@@ -174,7 +174,7 @@ public class Registration extends JFrame{
 		setSize(800,800);
 	}
 
-	public static boolean createUser(User user) {
+	public static boolean regiserUser(User user) {
 		Connection conn = null;
 		PreparedStatement checkAddress = null;
 		PreparedStatement setAddress = null;

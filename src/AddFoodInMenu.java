@@ -56,7 +56,7 @@ public class AddFoodInMenu extends JFrame{
 //					int randid = (int)Math.round(Math.random() * (max - min + 1) + min);
 					String rowCount = "select count(*) from Menu";
 					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant_management","root","pranav@05");
+					Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant_management","root","magesh123");
 					Statement statement = connection.createStatement();
 					String insertquery = "insert into Menu values (?,?,?)";
 					

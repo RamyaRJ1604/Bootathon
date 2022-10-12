@@ -37,12 +37,12 @@ public class Login{
 	    login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				if(!Pattern.matches("[a-zA-Z_]{8,20}", usernameInput.getText())) {
-					JOptionPane.showMessageDialog(frame, "Invalid Username!", "Alert", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "Username Format Invalid!", "Alert", JOptionPane.WARNING_MESSAGE);
 					username.setText("");
 					username.requestFocus();
 				}
 				else if(!Pattern.matches("^(?=.*[0-9])"+ "(?=.*[a-z])(?=.*[A-Z])"+ "(?=.*[@#$%^&+=])"+ "(?=\\S+$).{8,20}$", String.valueOf(passwordInput.getPassword()))) {
-					JOptionPane.showMessageDialog(frame, "Invalid Password!", "Alert", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "Password Format Invalid!", "Alert", JOptionPane.WARNING_MESSAGE);
 					passwordInput.setText("");
 					passwordInput.requestFocus();
 				}
@@ -51,12 +51,13 @@ public class Login{
 				}
 				else {
 					String name = usernameInput.getText(), pwd = new String(passwordInput.getPassword());
-					if(customerRadio.isSelected() && authorizeUser("customer", name, pwd)) {
-						new CustomerPage();
+					User currentUser;
+					if(customerRadio.isSelected() && (currentUser = authorizeUser("customer", name, pwd))!=null) {
+						new CustomerPage(currentUser);
 						frame.dispose();
 					} 
-					else if(staffRadio.isSelected() && authorizeUser("staff", name, pwd)) {
-						new StaffPage();
+					else if(staffRadio.isSelected() && (currentUser = authorizeUser("staff", name, pwd))!=null) {
+						new StaffPage(currentUser);
 						frame.dispose();
 					} else {
 						JOptionPane.showMessageDialog(frame, "User is not registered!");
@@ -79,22 +80,43 @@ public class Login{
 	    frame.setLayout(null);  
 	    frame.setVisible(true);  	
 	}
-	public static boolean authorizeUser(String table, String name, String password) {
+	public static User authorizeUser(String table, String name, String password) {
 		PreparedStatement statement = null;
+		PreparedStatement statement2 = null;
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		    conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant_management","root", "magesh123");
-		    statement = conn.prepareStatement("select count(*) from "+table+" where customer_name = ? && password = ?");
+		    statement = conn.prepareStatement("select count(*), customer_id from "+table+" where customer_name = ? && password = ?");
 			statement.setString(1, name);
 			statement.setString(2, password);
 		    ResultSet rs = statement.executeQuery();
 		    rs.next();
-		    if(rs.getInt(1) >= 1) return true;
-		    return false;
+		    if(rs.getInt(1) >= 1) {
+		    	int customerID = rs.getInt(2);
+		    	statement2 = conn.prepareStatement("select * from customer where customer_id = ?");
+		    	statement2.setInt(1, customerID);
+		    	ResultSet rs2 = statement2.executeQuery();
+		    	rs2.next();
+				String customerName = rs2.getString(2);
+				String pwd = rs2.getString(3);
+				String mobile = rs2.getString(4);
+				String mail = rs2.getString(5);
+				int addressID = rs2.getInt(6);
+
+				statement2.close();
+
+				statement2 = conn.prepareStatement("select * from address where address_id = ?");
+		    	statement2.setInt(1, addressID); 
+				rs2 = statement2.executeQuery();
+				rs2.next();
+				String address = String.valueOf(String.valueOf(rs2.getInt(2))  + "," + rs2.getString(3)  + "," + rs2.getString(4) + "," + String.valueOf(rs2.getInt(5)));
+		    	return new User(customerID, customerName, pwd, mobile, mail, address, table);
+		    }
+		    return null;
 		} catch(Exception e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		} finally {
 			try { statement.close(); } catch (Exception e) { }
 			try { conn.close(); } catch (Exception e) { }

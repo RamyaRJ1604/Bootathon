@@ -2,7 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class StaffPage extends JFrame{
-	StaffPage(){
+	StaffPage(User currentUser){
 		Font  f1  = new Font(Font.DIALOG,  Font.BOLD, 16);
 		
 		JLabel title = new JLabel("Welcome Staff");
@@ -35,7 +35,7 @@ public class StaffPage extends JFrame{
 		setSize(400, 300);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-	public static void main(String[] args) {
-		new StaffPage();
-	}
+	// public static void main(String[] args) {
+	// 	new StaffPage();
+	// }
 }
