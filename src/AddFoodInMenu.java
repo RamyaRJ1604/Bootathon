@@ -81,7 +81,7 @@ public class AddFoodInMenu extends JFrame{
 					}
 				}
 				catch(Exception e){
-					System.out.println(e);
+					System.err.println(e);
 				} finally {
 					try {statement.close();} catch (Exception e) { }
 					try {insertValue.close();} catch (Exception e) { }

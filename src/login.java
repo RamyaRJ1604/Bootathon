@@ -33,7 +33,7 @@ public class Login{
 	    staffRadio.setBounds(230,200,200,30); 
 	    buttonGroup=new ButtonGroup();    
 	    login=new JButton("LOGIN");
-	    login.setBounds(190,250,100,30);
+	    login.setBounds(90,250,100,30);
 	    login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				if(!Pattern.matches("[a-zA-Z_]{8,20}", usernameInput.getText())) {
@@ -65,6 +65,16 @@ public class Login{
 				}
 			}
 		}); 
+
+		JButton backButton = new JButton("Back");
+		backButton.setBounds(290,250,100,30);
+		backButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				new Home();
+				frame.dispose();
+			}
+		});
+		frame.add(backButton);
 	    
 	    frame.add(heading);
 	    frame.add(username);
@@ -76,7 +86,7 @@ public class Login{
 	    buttonGroup.add(customerRadio);
 	    buttonGroup.add(staffRadio);
 	    frame.add(login);
-	    frame.setSize(500,500);  
+	    frame.setSize(500,400);  
 	    frame.setLayout(null);  
 	    frame.setVisible(true);  	
 	}
@@ -87,15 +97,15 @@ public class Login{
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		    conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant_management","root", "magesh123");
-		    statement = conn.prepareStatement("select count(*), customer_id from "+table+" where customer_name = ? && password = ?");
+		    statement = conn.prepareStatement("select count(*), " + table +  "_id from "+table+" where " + table +  "_name = ? && password = ?");
 			statement.setString(1, name);
 			statement.setString(2, password);
 		    ResultSet rs = statement.executeQuery();
 		    rs.next();
 		    if(rs.getInt(1) >= 1) {
-		    	int customerID = rs.getInt(2);
-		    	statement2 = conn.prepareStatement("select * from customer where customer_id = ?");
-		    	statement2.setInt(1, customerID);
+		    	int id = rs.getInt(2);
+		    	statement2 = conn.prepareStatement("select * from " + table +  " where " + table +  "_id = ?");
+		    	statement2.setInt(1, id);
 		    	ResultSet rs2 = statement2.executeQuery();
 		    	rs2.next();
 				String customerName = rs2.getString(2);
@@ -111,7 +121,7 @@ public class Login{
 				rs2 = statement2.executeQuery();
 				rs2.next();
 				String address = String.valueOf(String.valueOf(rs2.getInt(2))  + "," + rs2.getString(3)  + "," + rs2.getString(4) + "," + String.valueOf(rs2.getInt(5)));
-		    	return new User(customerID, customerName, pwd, mobile, mail, address, table);
+		    	return new User(id, customerName, pwd, mobile, mail, address, table);
 		    }
 		    return null;
 		} catch(Exception e) {

@@ -20,77 +20,78 @@ public class Registration extends JFrame{
 	
 	Registration(){		
 		//Fonts
-		Font  font1  = new Font(Font.DIALOG,  Font.BOLD, 25);
-		Font  font3  = new Font(Font.DIALOG,  Font.BOLD, 15);
+		// Font  font1  = new Font(Font.DIALOG,  Font.BOLD, 25);
+		// Font  font3  = new Font(Font.DIALOG,  Font.BOLD, 15);
 		
 		//color
-		Color purp = new Color(122,136,222);
+		// Color purp = new Color(122,136,222);
 
 		//Labels
 		heading = new JLabel("Sign Up");
 		name = new JLabel("Name: ");
-		name.setBounds(220,150,100,50);
+		name.setBounds(80,120,100,30);
 		email = new JLabel("Email: ");
-		email.setBounds(220,250,100,50);
+		email.setBounds(80,170,100,30);
 		address = new JLabel("Address: ");
-		address.setBounds(220,350,100,50);
+		address.setBounds(80,220,100,30);
 		mobile = new JLabel("Mobile: ");
-		mobile.setBounds(220,450,100,50);
+		mobile.setBounds(80,270,100,30);
 		password = new JLabel("Password");
-		password.setBounds(220,550,100,50);
-		heading.setBounds(350,20,100,100);
+		password.setBounds(80,320,100,30);
+		heading.setBounds(220,20,100,100);
 		
 		//TextFields
 		nameInput = new JTextField("Yourname");
-		nameInput.setBounds(380,150,200,50);
+		nameInput.setBounds(250,120,200,30);
 		emailInput = new JTextField("abc@gmail.com");
-		emailInput.setBounds(380,250,200,50);
+		emailInput.setBounds(250,170,200,30);
 		addressInput = new JTextField("12,street,city,411000");
-		addressInput.setBounds(380,350,200,50);
+		addressInput.setBounds(250,220,200,30);
 		mobileInput = new JTextField("9234567890");
-		mobileInput.setBounds(380,450,200,50);
+		mobileInput.setBounds(250,270,200,30);
 		passwordInput = new JPasswordField("Krishna@24");
-		passwordInput.setBounds(380,550,200,50);
+		passwordInput.setBounds(250,320,200,30);
 		
 
 		//radiobutton
 		JRadioButton customerButton = new JRadioButton("Customer"); 
-	    customerButton.setBounds(250,600,100,50);    
+	    customerButton.setBounds(50,370,100,50);    
 	    JRadioButton staffButton = new JRadioButton("Restaurant Staff"); 	
-	    staffButton.setBounds(450,600,100,50); 
+	    staffButton.setBounds(250,370,150,50); 
 	    ButtonGroup buttonGroup = new ButtonGroup();    
 		buttonGroup.add(customerButton);
 		buttonGroup.add(staffButton);
 		
 		//Button
 		register = new JButton("Register");
-		register.setBounds(350,680,100,50);
-		register.setBackground(Color.yellow);
-		register.setForeground(purp);
+		register.setBounds(100,440,100,40);
+
+		// register.setBackground(Color.yellow);
+		// register.setForeground(purp);
 		
 		//setting fonts
-		heading.setFont(font1);
-		register.setFont(font3);
-		name.setFont(font3);
-		address.setFont(font3);
-		mobile.setFont(font3);
-		password.setFont(font3);
+		// heading.setFont(font1);
+		// register.setFont(font3);
+		// name.setFont(font3);
+		// address.setFont(font3);
+		// mobile.setFont(font3);
+		// password.setFont(font3);
 		
 		//setting color
-		this.getContentPane().setBackground(purp);
-		name.setForeground(Color.YELLOW);
-		password.setForeground(Color.YELLOW);
-		mobile.setForeground(Color.YELLOW);
-		address.setForeground(Color.YELLOW);
-		email.setForeground(Color.YELLOW);
-		heading.setForeground(Color.YELLOW);
+		// this.getContentPane().setBackground(purp);
+		// name.setForeground(Color.YELLOW);
+		// password.setForeground(Color.YELLOW);
+		// mobile.setForeground(Color.YELLOW);
+		// address.setForeground(Color.YELLOW);
+		// email.setForeground(Color.YELLOW);
+		// heading.setForeground(Color.YELLOW);
 		
 		//padding
-		nameInput.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		emailInput.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		addressInput.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		mobileInput.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		passwordInput.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+		// nameInput.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		// emailInput.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		// addressInput.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		// mobileInput.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		// passwordInput.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 		
 		//adding the components to the frame
 		add(heading);
@@ -168,10 +169,20 @@ public class Registration extends JFrame{
 			}
 		});
 
+		JButton backButton = new JButton("Back");
+		backButton.setBounds(220, 440, 100, 40);
+		backButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				new Home();
+				dispose();
+			}
+		});
+		add(backButton);
+
 		setLayout(null);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(800,800);
+		setSize(500,550);
 	}
 
 	public static boolean regiserUser(User user) {
@@ -223,7 +234,6 @@ public class Registration extends JFrame{
 			userRegister.setString(4, user.mobile);
 			userRegister.setString(5, user.mail);
 			userRegister.setInt(6, addressRows);
-			System.out.println(userRegister);
 			userRegister.execute();
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -1,5 +1,5 @@
 public class User {
-    int customerID;
+    int id;
     String name;
     String password;
     String mobile;
@@ -21,8 +21,8 @@ public class User {
         }
     }
 
-    User(int id, String a, String b, String c, String d, String e, String f){
-        customerID = id;
+    User(int i, String a, String b, String c, String d, String e, String f){
+        id = i;
         name = a;
         password = b;
         mobile = c;
