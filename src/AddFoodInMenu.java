@@ -6,11 +6,6 @@ import javax.swing.*;
 
 public class AddFoodInMenu extends JFrame{
 	AddFoodInMenu(){
-		
-		
-		
-		// jdbc
-		
 		Font  f1  = new Font(Font.DIALOG,  Font.BOLD, 16);
 		
 		JLabel title = new JLabel("Menu");
@@ -50,10 +45,6 @@ public class AddFoodInMenu extends JFrame{
 		addFood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				try {
-					System.out.print("Dfd");
-					int min = 10000;
-					int max = 99999;
-//					int randid = (int)Math.round(Math.random() * (max - min + 1) + min);
 					String rowCount = "select count(*) from Menu";
 					Class.forName("com.mysql.cj.jdbc.Driver");
 					Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant_management","root","magesh123");

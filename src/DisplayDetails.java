@@ -2,7 +2,7 @@ import java.awt.*;
 import javax.swing.JFrame;
 
 public class DisplayDetails extends JFrame {
-	Details(){
+	DisplayDetails(){
 		
 		setLayout(null);
 		setVisible(true);
